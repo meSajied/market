@@ -1,11 +1,28 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './App.css';
+import { AuthProvider } from './account/Authentication';
+import { RequiredAuthenticationAdmin } from './account/RequiredAuthenticationAdmin';
+import Login from './account/Login';
+import Dashboard from './account/Dashboard';
 
 function App() {
   return (
-    <div className="text-3xl">
-      Hello
-    </div>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/admin/login" element={<Login />} />
+          <Route 
+            path="/" 
+            element={
+              <RequiredAuthenticationAdmin>
+                <Dashboard />
+              </RequiredAuthenticationAdmin>
+            } 
+          />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 
