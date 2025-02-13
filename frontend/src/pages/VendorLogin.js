@@ -1,21 +1,21 @@
 import React, { useState } from "react";
-import { useAuth } from "./Authentication";
+import { useAuth } from "../account/Authentication";
 import { Navigate } from "react-router";
 import { axiosInstance } from "../axiosInstance";
 import {Loading} from "../components/Loading";
 
-const Login = () => {
+const VendorLogin = () => {
     const [formData, setFormData] = useState({
-        username: "",
+        phone: "",
         password: ""
     });
     const [isLoading, setLoading] = useState(false);
     const [showWarning, setShowWarning] = useState(false);
 
-    const { loginAdmin, isAdminLoggedIn } = useAuth();
+    const { login, isLoggedIn } = useAuth();
 
-    if (isAdminLoggedIn) {
-        return <Navigate to="/admin/dashboard" />;
+    if (isLoggedIn) {
+        return <Navigate to="/vendor/dashboard" />;
     }
 
     function handleChange(e) {
@@ -46,14 +46,14 @@ const Login = () => {
                     )}
                     <form onSubmit={handleLogin} className="space-y-4">
                         <div>
-                            <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
-                                Username:
+                            <label htmlFor="phone" className="block text-gray-700 text-sm font-bold mb-2">
+                                phone:
                             </label>
                             <input
                                 type="text"
-                                name="username"
+                                name="phone"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                value={formData.username}
+                                value={formData.phone}
                                 onChange={handleChange}
                                 required
                             />
@@ -97,7 +97,7 @@ const Login = () => {
         try {
             setLoading(true);
             await axiosInstance
-                .post('/admin/login', formData, {
+                .post('/vendor/login', formData, {
                     headers: {
                         "Content-Type": "application/json"
                     }
@@ -105,8 +105,8 @@ const Login = () => {
                 .then((res) => {
                     console.log(res);
                     
-                    if (res.data?.username) {
-                        loginAdmin(res.data);
+                    if (res.data?.phone) {
+                        login(res.data);
                         console.log(res.data);
                     } else {
                         setShowWarning(true);
@@ -125,10 +125,10 @@ const Login = () => {
 
     function clearData() {
         setFormData({
-            username: "",
+            phone: "",
             password: ""
         });
     }
 };
 
-export default Login;
+export default VendorLogin;

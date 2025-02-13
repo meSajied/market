@@ -18,11 +18,11 @@ public class ParentCategory {
     private Long id;
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     @JsonManagedReference
     private List<ChildCategory> childCategory;
 
-    @OneToMany
+    @OneToMany(mappedBy = "parentCategory")
     @JsonManagedReference
     private List<Product> product;
 

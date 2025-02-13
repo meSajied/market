@@ -32,8 +32,8 @@ public class VendorService {
       return vendorRepository.findAll();
    }
 
-   public Optional<Vendor> getVendor(Long id) {
-      return vendorRepository.findById(id);
+   public Optional<Vendor> getVendor(String phone, String password) {
+      return vendorRepository.findByPhoneAndPassword(phone, password);
    }
 
    public Vendor create(Vendor vendor) {

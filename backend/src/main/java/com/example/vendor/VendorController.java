@@ -4,15 +4,21 @@ import com.example.product.Product;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/vendors")
+@RequestMapping("/vendor")
 @CrossOrigin(origins = "http://localhost:3000")
 public class VendorController {
     private final VendorService vendorService;
 
     public VendorController(VendorService vendorService) {
         this.vendorService = vendorService;
+    }
+
+    @PostMapping("/login")
+    public Optional<Vendor> login(@RequestBody AuthRequest vendor) {
+      return vendorService.getVendor(vendor.getPhone(), vendor.getPassword());
     }
 
     @GetMapping

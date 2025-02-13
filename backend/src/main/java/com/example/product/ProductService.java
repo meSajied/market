@@ -6,28 +6,19 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.vendor.Vendor;
-import com.example.vendor.VendorService;
-
 @Service
 @Transactional
 public class ProductService {
   private final ProductRepository productRepository;
-  private final ParentCategory parentCategory;
-  private final ChildCategory childCategory;
-  private final VendorService vendorService;
-  private Vendor vendor;
-  
+  private final ParentCategoryRepository parentCategoryRepository;
+  private final ChildCategoryRepository childCategoryRepository;
+
   public ProductService(ProductRepository productRepository, 
-      ParentCategory parentCategory, 
-      ChildCategory childCategory, 
-      VendorService vendorService,
-      Vendor vendor) {
+                        ParentCategoryRepository parentCategoryRepository, 
+                        ChildCategoryRepository childCategoryRepository) {
     this.productRepository = productRepository;
-    this.parentCategory = parentCategory;
-    this.childCategory = childCategory;
-    this.vendorService = vendorService;
-    this.vendor = vendor;
+    this.parentCategoryRepository = parentCategoryRepository;
+    this.childCategoryRepository = childCategoryRepository;
   }
 
   public Product updateProduct(Product product) {
@@ -44,8 +35,23 @@ public class ProductService {
       oldProduct.setStock(product.getStock());
       oldProduct.setColor(product.getColor());
       oldProduct.setSize(product.getSize());
-      oldProduct.setParentCategory(product.getParentCategory());
-      oldProduct.setChildCategory(product.getChildCategory());
+
+      if (product.getParentCategory() != null) {
+        ParentCategory parentCategory = parentCategoryRepository.findByName(product.getParentCategory().getName()).get();
+        oldProduct.setParentCategory(parentCategory);
+      }else if(product.getParentCategory() == null) {
+        ParentCategory parentCategory = parentCategoryRepository.save(product.getParentCategory());
+        oldProduct.setParentCategory(parentCategory);
+      }
+
+      if (product.getChildCategory() != null) {
+        ChildCategory childCategory = childCategoryRepository.findByName(product.getChildCategory().getName()).get();
+        oldProduct.setChildCategory(childCategory);
+      }else if(product.getChildCategory() == null) {
+        ChildCategory childCategory = childCategoryRepository.save(product.getChildCategory());
+        oldProduct.setChildCategory(childCategory);
+      }
+
       oldProduct.setComission(product.getComission());
 
       return productRepository.save(oldProduct);
@@ -55,7 +61,6 @@ public class ProductService {
   }
    
   public Product create(Product product) {
-    
     return productRepository.save(product);
   }
 

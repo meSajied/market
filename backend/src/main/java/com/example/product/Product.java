@@ -3,6 +3,7 @@ package com.example.product;
 import com.example.vendor.Vendor;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -39,15 +40,17 @@ public class Product {
   private Long discount;
   
   private String description;
-  private Status status = Status.INACTIVE;
+  @Enumerated(EnumType.STRING)
+  private Status status;
+  @Enumerated(EnumType.STRING)
   private Stock stock;
   private Double comission;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JsonBackReference
   private ParentCategory parentCategory;
   
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JsonBackReference
   private ChildCategory childCategory;
 

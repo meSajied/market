@@ -13,20 +13,23 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final ParentCategoryService parentCategoryService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, ParentCategoryService parentCategoryService) {
         this.productService = productService;
+        this.parentCategoryService = parentCategoryService;
     }
 
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody Product product) {
-        Product createdProduct = productService.create(product);
-        return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
+    public Product createProduct(@RequestBody Product product) {
+        System.out.println(product.getParentCategory());
+        return productService.create(product);
+        
     }
 
-    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.getAll();
+    @GetMapping("/all")
+    public ResponseEntity<List<ParentCategory>> getAllProducts() {
+        List<ParentCategory> products = parentCategoryService.getAll();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
