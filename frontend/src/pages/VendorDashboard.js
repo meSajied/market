@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import { axiosInstance } from "../axiosInstance";
-import { FilterData } from "../component/FilterData";
+import { FilterData } from "../components/FilterData";
 
 export default function VendorDashboard() {
     const [product, setProduct] = useState({
@@ -14,15 +13,41 @@ export default function VendorDashboard() {
         stock: "AVAILABLE", 
         color: "RED",
         size: "S",
-        parentCategory: "",
-
+        parentCategory: {
+            id: ""
+        },
+        childCategory: {
+            id: ""
+        }
     });
 
-    const {allCategory} = FilterData();
+    const { allCategory, allSubCategory } = FilterData();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProduct({ ...product, [name]: value });
+        const parsedValue = Number(value); // Convert to number
+
+        if (name === "parentCategory") {
+            setProduct((prev) => ({
+                ...prev,
+                parentCategory: { ...prev.parentCategory, id: parsedValue }
+            }));
+        } else if (name === "childCategory") {
+            setProduct((prev) => ({
+                ...prev,
+                childCategory: { ...prev.childCategory, id: parsedValue }
+            }));
+        } else if (name === "price" || name === "discount") {
+            setProduct((prev) => ({
+                ...prev,
+                [name]: Number(value)
+            }));
+        } else {
+            setProduct((prev) => ({
+                ...prev,
+                [name]: value
+            }));
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -30,14 +55,12 @@ export default function VendorDashboard() {
         console.log(product);
         
         try {
-            const response = await axiosInstance.post("/products", product, {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            });
+            const response = await axiosInstance.post("/products", product);
             console.log("Product added:", response.data);
+            alert("Product added successfully!");
         } catch (error) {
             console.error("Error adding product:", error);
+            alert("Failed to add product. Please try again.");
         }
     };
 
@@ -64,9 +87,18 @@ export default function VendorDashboard() {
                         <input type="number" name="discount" placeholder="Discount" value={product.discount} onChange={handleChange} className="border p-2 w-full" />
                         <textarea name="description" placeholder="Description" value={product.description} onChange={handleChange} className="border p-2 w-full resize-none" required />
                         
-                       <select name="parentCategory" value={product.parentCategory} onChange={handleChange} className="border p-2 w-full">
+                        <select name="parentCategory" value={product.parentCategory.id} onChange={handleChange} className="border p-2 w-full" required>
                             <option value="">Select Category</option>
                             {allCategory.map((category) => (
+                                <option key={category.id} value={category.id}>
+                                    {category.name}
+                                </option>
+                            ))}
+                        </select>
+
+                        <select name="childCategory" value={product.childCategory.id} onChange={handleChange} className="border p-2 w-full" required>
+                            <option value="">Select Subcategory</option>
+                            {allSubCategory.map((category) => (
                                 <option key={category.id} value={category.id}>
                                     {category.name}
                                 </option>

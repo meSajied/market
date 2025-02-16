@@ -37,19 +37,17 @@ public class ProductService {
       oldProduct.setSize(product.getSize());
 
       if (product.getParentCategory() != null) {
-        ParentCategory parentCategory = parentCategoryRepository.findByName(product.getParentCategory().getName()).get();
+        ParentCategory parentCategory = parentCategoryRepository.findById(product.getParentCategory().getId()).orElseThrow(() -> new RuntimeException("Parent Category not found"));
         oldProduct.setParentCategory(parentCategory);
-      }else if(product.getParentCategory() == null) {
-        ParentCategory parentCategory = parentCategoryRepository.save(product.getParentCategory());
-        oldProduct.setParentCategory(parentCategory);
+      } else {
+        oldProduct.setParentCategory(null);
       }
 
       if (product.getChildCategory() != null) {
-        ChildCategory childCategory = childCategoryRepository.findByName(product.getChildCategory().getName()).get();
+        ChildCategory childCategory = childCategoryRepository.findById(product.getChildCategory().getId()).orElseThrow(() -> new RuntimeException("Child Category not found"));
         oldProduct.setChildCategory(childCategory);
-      }else if(product.getChildCategory() == null) {
-        ChildCategory childCategory = childCategoryRepository.save(product.getChildCategory());
-        oldProduct.setChildCategory(childCategory);
+      } else {
+        oldProduct.setChildCategory(null);
       }
 
       oldProduct.setComission(product.getComission());
@@ -57,10 +55,11 @@ public class ProductService {
       return productRepository.save(oldProduct);
     }
 
-    return null;
+    throw new RuntimeException("Product not found");
   }
    
   public Product create(Product product) {
+    
     return productRepository.save(product);
   }
 

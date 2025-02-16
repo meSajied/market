@@ -22,6 +22,7 @@ public class VendorService {
       Optional<Vendor> vendorOp =  vendorRepository.findById(id);
 
       if(vendorOp.isPresent()) {
+         System.out.println(vendorOp.get().getProducts());
          return vendorOp.get().getProducts();
       }
 

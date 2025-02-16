@@ -3,6 +3,7 @@ package com.example.product;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.CascadeType;
@@ -23,11 +24,12 @@ public class ChildCategory {
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonBackReference
+    //@JsonBackReference("childCategoryR")
     private ParentCategory category;
 
     @OneToMany(mappedBy = "childCategory")
-    @JsonManagedReference
+    //@JsonManagedReference("productsR")
+    @JsonIgnore
     private List<Product> products;
 
     public Long getId() {

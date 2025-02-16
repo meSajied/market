@@ -8,14 +8,14 @@ import Login from './account/Login';
 import Dashboard from './account/Dashboard';
 import VendorLogin from './pages/VendorLogin';
 import VendorDashboard from './pages/VendorDashboard';
-import { FilterData } from './component/FilterData';
+import { FilterData } from './components/FilterData';
 import ProductEdit from './pages/ProductEdit';
 import OrderList from './pages/OrderList';
 import ProductList from './pages/ProductList';
 import AddProduct from './pages/AddProduct';
 
 function App() {
-  const { allCategory, allSubCategory, discountProduct, allActiveProducts, allProducts } = FilterData();
+  //const { allCategory, allSubCategory, discountProduct, allActiveProducts, allProducts } = FilterData();
  
   return (
     <AuthProvider>

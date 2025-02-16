@@ -2,6 +2,7 @@ package com.example.product;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -19,11 +20,13 @@ public class ParentCategory {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    @JsonManagedReference
+    //@JsonManagedReference("childCategoryR")
+    @JsonIgnore
     private List<ChildCategory> childCategory;
 
     @OneToMany(mappedBy = "parentCategory")
-    @JsonManagedReference
+    @JsonIgnore
+    //@JsonManagedReference("productR")
     private List<Product> product;
 
     public Long getId() {

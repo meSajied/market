@@ -6,7 +6,7 @@ function RequiredAuthentication({children}) {
     const {isLoggedIn} = useAuth();
 
     return(
-        isLoggedIn ? children : <Navigate to='/login' />
+        isLoggedIn ? children : <Navigate to='/vendor/login' />
     )
 }
 

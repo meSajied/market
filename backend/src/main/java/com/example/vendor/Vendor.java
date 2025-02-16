@@ -25,8 +25,8 @@ public class Vendor {
   private String password;
   private String address;
 
-  @OneToMany(cascade = CascadeType.ALL)
-  @JsonManagedReference
+  @OneToMany
+  @JsonManagedReference("productR")
   private List<Product> products;
   
   public Long getId() {
@@ -79,6 +79,12 @@ public class Vendor {
 
   public void setProducts(List<Product> products) {
      this.products = products;
+  }
+
+  @Override
+  public String toString() {
+    // TODO Auto-generated method stub
+    return ""+id;
   }
   
 }

@@ -47,15 +47,15 @@ public class Product {
   private Double comission;
 
   @ManyToOne(cascade = CascadeType.ALL)
-  @JsonBackReference
+  //@JsonBackReference("productR")
   private ParentCategory parentCategory;
   
   @ManyToOne(cascade = CascadeType.ALL)
-  @JsonBackReference
+  //@JsonBackReference("productsR")
   private ChildCategory childCategory;
 
-  @ManyToOne
-  @JsonBackReference
+  @ManyToOne(cascade = CascadeType.ALL)
+  //@JsonBackReference("productR")
   private Vendor vendor;
 
   @Enumerated(EnumType.STRING)
