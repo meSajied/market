@@ -20,13 +20,12 @@ public class ParentCategory {
     private String name;
 
     @OneToMany(mappedBy = "category")
-    //@JsonManagedReference("childCategoryR")
+    @JsonManagedReference
     @JsonIgnore
     private List<ChildCategory> childCategory;
 
     @OneToMany(mappedBy = "parentCategory")
-    @JsonIgnore
-    //@JsonManagedReference("productR")
+    @JsonManagedReference
     private List<Product> product;
 
     public Long getId() {

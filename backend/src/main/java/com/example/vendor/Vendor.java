@@ -26,7 +26,7 @@ public class Vendor {
   private String address;
 
   @OneToMany
-  @JsonManagedReference("productR")
+  @JsonManagedReference
   private List<Product> products;
   
   public Long getId() {

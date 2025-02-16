@@ -24,12 +24,11 @@ public class ChildCategory {
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    //@JsonBackReference("childCategoryR")
+    @JsonBackReference
     private ParentCategory category;
 
     @OneToMany(mappedBy = "childCategory")
-    //@JsonManagedReference("productsR")
-    @JsonIgnore
+    @JsonManagedReference
     private List<Product> products;
 
     public Long getId() {
