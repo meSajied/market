@@ -15,7 +15,8 @@ import ProductList from './pages/ProductList';
 import AddProduct from './pages/AddProduct';
 
 function App() {
-  //const { allCategory, allSubCategory, discountProduct, allActiveProducts, allProducts } = FilterData();
+  const { allCategory, allSubCategory, discountProduct, allActiveProducts, allProducts } = FilterData();
+    
  
   return (
     <AuthProvider>
@@ -24,9 +25,9 @@ function App() {
           <Route path="/admin/login" element={<Login />} />
           <Route path="/vendor/login" element={<VendorLogin />} />
           <Route path="/product/:id/edit" element={<ProductEdit />} />
-          <Route path="/order/list" element={<OrderList />} />
-          <Route path="/product/list" element={<ProductList />} />
-          <Route path="/product/add" element={<AddProduct />} />
+          <Route path="/vendor/order/list" element={<OrderList />} />
+          <Route path="/vendor/product/list" element={<ProductList />} />
+          <Route path="/vendor/product/add" element={<AddProduct />} />
           
           <Route 
             path="/admin/dashboard" 

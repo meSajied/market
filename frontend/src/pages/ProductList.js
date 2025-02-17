@@ -24,17 +24,17 @@ const ProductList = () => {
     <div className="flex h-screen">
       <div className="border rounded-lg basis-1/6 bg-blue-900 text-white justify-center p-3 text-center space-y-3">
         <div>
-          <Link className="p-2 font-semibold" to="/product/add">
+          <Link className="p-2 font-semibold" to="/vendor/product/add">
             Add Product
           </Link>
         </div>
         <div>
-          <Link className="p-2 font-semibold" to="/product/list">
+          <Link className="p-2 font-semibold" to="/vendor/product/list">
             Product List
           </Link>
         </div>
         <div>
-          <Link className="p-2 font-semibold" to="/order/list">
+          <Link className="p-2 font-semibold" to="/vendor/order/list">
             Order List
           </Link>
         </div>
@@ -54,6 +54,7 @@ const ProductList = () => {
               <th className="py-2 px-4 border-b">Commission</th>
               <th className="py-2 px-4 border-b">Color</th>
               <th className="py-2 px-4 border-b">Size</th>
+              <th className="py-2 px-4 border-b">Edit</th>
             </tr>
           </thead>
           <tbody>
@@ -69,6 +70,9 @@ const ProductList = () => {
                 <td className="py-2 px-4 border-b">{product.comission}</td>
                 <td className="py-2 px-4 border-b">{product.color}</td>
                 <td className="py-2 px-4 border-b">{product.size}</td>
+                <td className="py-2 px-4 border-b">
+                  <Link to={`/product/${product.id}/edit`} className="p-1 border-2 border-red">Edit</Link>
+                </td>
               </tr>
             ))}
           </tbody>

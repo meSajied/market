@@ -16,7 +16,7 @@ import jakarta.persistence.Enumerated;
 public class Product {
 
   enum Color {
-      RED, BLACK, WHITE;
+       RED, BLACK, WHITE;
   }
 
   enum Size {
@@ -41,17 +41,14 @@ public class Product {
   
   private String description;
   @Enumerated(EnumType.STRING)
-  private Status status;
+  private Status status=Status.INACTIVE;
   @Enumerated(EnumType.STRING)
   private Stock stock;
   private Double comission;
 
+
   @ManyToOne(cascade = CascadeType.ALL)
-  @JsonBackReference
-  private ParentCategory parentCategory;
-  
-  @ManyToOne(cascade = CascadeType.ALL)
-  @JsonBackReference
+  @JsonBackReference("product-child-category")
   private ChildCategory childCategory;
 
   @ManyToOne(cascade = CascadeType.ALL)
@@ -114,14 +111,6 @@ public class Product {
 
   public void setSize(Size size) {
       this.size = size;
-  }
-
-  public ParentCategory getParentCategory() {
-    return parentCategory;
-  }
-
-  public void setParentCategory(ParentCategory parentCategory) {
-     this.parentCategory = parentCategory;
   }
 
   public ChildCategory getChildCategory() {

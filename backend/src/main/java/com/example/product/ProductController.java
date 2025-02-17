@@ -37,6 +37,16 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getProduct(@PathVariable Long id) {
+        try {
+            Product product =  productService.getproductOfId(id).get();
+            return new ResponseEntity<>(product, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Failed to retrieve products: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping
     public ResponseEntity<?> updateProduct(@RequestBody Product product) {
         try {

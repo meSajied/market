@@ -5,6 +5,7 @@ function FilterData() {
   const [allCategory, setAllCategory] = useState([]);
   const [discountProduct, setDiscountProduct] = useState([]);
   const [allActiveProducts, setAllActiveProducts] = useState([]);
+  const [allInactiveProducts, setAllInactiveProducts] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
   const [allSubCategory, setAllSubCategory] = useState([]);
 
@@ -12,28 +13,26 @@ function FilterData() {
     const fetchData = async () => {
       try {
         const resData = (await axiosInstance.get('/products/all')).data;
-        console.log(resData);
+        
         
 
         setAllCategory(resData);
 
-        // Extract subcategories
-        const childCategories = resData.flatMap(category => category.childCategory || []);
+        const childCategories = resData.flatMap(category => category.childCategory);
+        
 
-        // Extract products
-        const allProductsArray = resData.flatMap(category => [
-          ...(category.product || []),
-          ...childCategories.flatMap(subcategory => subcategory.products || [])
-        ]);
+        const allProductsArray = [
+          ...childCategories.flatMap(subcategory => subcategory.products)
+        ]
 
-        // Filter products
         const discountProducts = allProductsArray.filter(x => x.discount !== null && x.status === "ACTIVE");
         const activeProducts = allProductsArray.filter(x => x.status === "ACTIVE");
+        const inActiveProducts = allProductsArray.filter(x => x.status === "INACTIVE");
 
-        // Set state
         setAllSubCategory(childCategories);
         setDiscountProduct(discountProducts);
         setAllActiveProducts(activeProducts);
+        setAllInactiveProducts(inActiveProducts)
         setAllProducts(allProductsArray);
 
       } catch (error) {
@@ -44,7 +43,9 @@ function FilterData() {
     fetchData();
   }, []);
 
-  return { allCategory, allSubCategory, discountProduct, allActiveProducts, allProducts };
+  
+
+  return { allCategory, allSubCategory, discountProduct, allActiveProducts, allProducts, allInactiveProducts };
 }
 
 export { FilterData };

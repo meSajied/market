@@ -6,13 +6,13 @@ const OrderList = () => {
         <div className="flex h-screen">
             <div className="border rounded-lg basis-1/6 bg-blue-900 text-white justify-center p-3 text-center space-y-3">
                 <div>
-                    <Link className="p-2 font-semibold" to="/product/add">Add Product</Link>
+                    <Link className="p-2 font-semibold" to="/vendor/product/add">Add Product</Link>
                 </div>
                 <div>
-                    <Link className="p-2 font-semibold" to="/product/list">Product List</Link>
+                    <Link className="p-2 font-semibold" to="/vendor/product/list">Product List</Link>
                 </div>
                 <div>
-                    <Link className="p-2 font-semibold" to="/order/list">Order List</Link>
+                    <Link className="p-2 font-semibold" to="/vendor/order/list">Order List</Link>
                 </div>
             </div>
 

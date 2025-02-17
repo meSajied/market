@@ -21,12 +21,7 @@ public class ParentCategory {
 
     @OneToMany(mappedBy = "category")
     @JsonManagedReference
-    @JsonIgnore
     private List<ChildCategory> childCategory;
-
-    @OneToMany(mappedBy = "parentCategory")
-    @JsonManagedReference
-    private List<Product> product;
 
     public Long getId() {
         return id;
@@ -50,13 +45,5 @@ public class ParentCategory {
 
     public void setChildCategory(List<ChildCategory> childCategory) {
         this.childCategory = childCategory;
-    }
-
-    public List<Product> getProduct() {
-        return product;
-    }
-
-    public void setProduct(List<Product> product) {
-        this.product = product;
     }
 }

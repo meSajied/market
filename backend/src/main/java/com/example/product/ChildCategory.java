@@ -28,7 +28,7 @@ public class ChildCategory {
     private ParentCategory category;
 
     @OneToMany(mappedBy = "childCategory")
-    @JsonManagedReference
+    @JsonManagedReference("product-child-category")
     private List<Product> products;
 
     public Long getId() {
